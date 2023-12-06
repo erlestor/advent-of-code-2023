@@ -12,7 +12,6 @@ with open("./2/games.txt", "r") as file:
 
         gameId = int(game.split(": ")[0].split(" ")[1])
         rounds = game.split(": ")[1].split("; ")
-        
 
         for round in rounds:
             entries = round.split(", ")
