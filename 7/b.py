@@ -103,7 +103,7 @@ def getTotalWinnings(hands):
     for i in range(len(hands)):
         _, bid = hands[i]
         totalWinnings += bid * (i + 1)
-    
+        
     return totalWinnings
 
 
