@@ -60,4 +60,4 @@ if __name__ == "__main__":
 
     nextValues = [findNextValue(history) for history in histories]
     print(f"Next values: {nextValues}")
-    print(f"Sum of next value: {sum(nextValues)}")
+    print(f"Sum of next values: {sum(nextValues)}")
