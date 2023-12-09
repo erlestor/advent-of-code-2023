@@ -2,8 +2,8 @@ import math
 
 
 def getInstructions():
-    with open("./8/map.txt", "r") as f:
     # with open("./8/testMap2.txt", "r") as f:
+    with open("./8/map.txt", "r") as f:
         text = f.read()
         # TODO: storing instructions as the index
         instructions = text.split("\n\n")[0]
@@ -28,18 +28,19 @@ def findRequiredSteps(instructions, map):
     print("Starting nodes:", nodes)
     numberOfNodes = len(nodes)
     print("Numberofnodes:", numberOfNodes)
-    
-    # go through each starting node and loop instructions till you find a node that ends with Z
+
+    # go through each starting node:
+    # - loop instructions till you find a node that ends with Z
     # save the length of the path
     # answer: lcm(length of paths)
-   
-    pathLengths = [] 
+
+    pathLengths = []
 
     for startingNode in nodes:
         pathLength = 0
         node = startingNode
         endNodeFound = False
-        
+
         while not endNodeFound:
             for i, instruction in enumerate(instructions):
                 pathLength += 1
