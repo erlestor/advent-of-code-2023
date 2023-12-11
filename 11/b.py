@@ -1,0 +1,92 @@
+# plan:
+# - instead of expanding galaxies. just mark empty rows and columns with x
+# - when finding shortest path: count x's passed 
+# - add number of x's * 1 million to length
+
+
+def replaceValue(space, position, value):
+    row, col = position
+    space[row] = space[row][:col] + value + space[row][col + 1:]
+
+
+def getSpace():
+    with open("./11/space.txt", "r") as f:
+    # with open("./11/space_example_1.txt", "r") as f:
+        return f.read().split("\n")
+
+
+def getExpandedSpace():
+    space = getSpace()
+    print(f"Start space: {space}")
+
+    # expand vertically
+    rowIdx = 0
+    while rowIdx < len(space):
+        row = space[rowIdx]
+
+        if row.count(".") == len(row):
+            space[rowIdx] = "x" * len(row)
+        
+        rowIdx += 1
+    
+    # expand horizontally
+    colIdx = 0
+    while colIdx < len(space[0]):
+        col = "".join([row[colIdx] for row in space])
+
+        if col.count(".") + col.count("x") == len(col):
+            for rowIdx, row in enumerate(space):
+                position = (rowIdx, colIdx)
+                replaceValue(space, position, "x")
+
+        colIdx += 1
+    
+    print(f"Expanded space: {space}")
+    return space
+
+
+# assumes space is expanded
+def getGalaxyLocations(space):
+    galaxyLocations = []
+
+    for rowIdx, _ in enumerate(space):
+        for colIdx, _ in enumerate(space[rowIdx]):
+            if space[rowIdx][colIdx] == "#":
+                galaxyLocations.append((rowIdx, colIdx))
+    
+    print(f"Galaxy locations: {galaxyLocations}")
+    return galaxyLocations
+
+
+def getShortestPathLength(space, start, end):
+    startRow, startCol = start
+    endRow, endCol = end
+    length = 0
+    expansionSize = 1_000_000
+
+    down = [row[startCol] for row in space[startRow + 1: endRow + 1:]]
+    length += down.count("x") * expansionSize + down.count("#") + down.count(".")
+
+    right = space[endRow][startCol + 1: endCol + 1:] if endCol >= startCol else space[endRow][endCol:startCol:]
+    length += right.count("x") * expansionSize + right.count("#") + right.count(".")
+
+    return length
+
+
+def getAllShortestPaths():
+    space = getExpandedSpace()
+    galaxies = getGalaxyLocations(space)
+    totalLength = 0
+
+    for i in range(len(galaxies)):
+        for j in range(i + 1, len(galaxies)):
+            start = galaxies[i]
+            end = galaxies[j]
+            totalLength += getShortestPathLength(space, start, end)
+    
+    return totalLength
+
+
+if __name__ == "__main__":
+    totalLength = getAllShortestPaths()
+    print(f"Total length of shortest paths: {totalLength}")
