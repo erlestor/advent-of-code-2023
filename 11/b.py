@@ -17,21 +17,14 @@ def getSpace():
 
 def getExpandedSpace():
     space = getSpace()
-    print(f"Start space: {space}")
 
     # expand vertically
-    rowIdx = 0
-    while rowIdx < len(space):
-        row = space[rowIdx]
-
+    for rowIdx, row in enumerate(space):
         if row.count(".") == len(row):
             space[rowIdx] = "x" * len(row)
-        
-        rowIdx += 1
     
     # expand horizontally
-    colIdx = 0
-    while colIdx < len(space[0]):
+    for colIdx, _ in enumerate(space[0]):
         col = "".join([row[colIdx] for row in space])
 
         if col.count(".") + col.count("x") == len(col):
@@ -39,9 +32,6 @@ def getExpandedSpace():
                 position = (rowIdx, colIdx)
                 replaceValue(space, position, "x")
 
-        colIdx += 1
-    
-    print(f"Expanded space: {space}")
     return space
 
 
@@ -54,7 +44,6 @@ def getGalaxyLocations(space):
             if space[rowIdx][colIdx] == "#":
                 galaxyLocations.append((rowIdx, colIdx))
     
-    print(f"Galaxy locations: {galaxyLocations}")
     return galaxyLocations
 
 
@@ -90,3 +79,4 @@ def getAllShortestPaths():
 if __name__ == "__main__":
     totalLength = getAllShortestPaths()
     print(f"Total length of shortest paths: {totalLength}")
+    print("Expected: 685038186836")
