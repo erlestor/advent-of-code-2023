@@ -1,6 +1,6 @@
 def getPatterns():
-    with open("./13/patterns.txt", "r") as f:
     # with open("./13/patterns_example.txt", "r") as f:
+    with open("./13/patterns.txt", "r") as f:
         return [pattern.splitlines() for pattern in f.read().split("\n\n")]
 
 
@@ -21,8 +21,7 @@ def getLinesBefore(lines):
             linesBefore = linesBefore[len(linesBefore) - len(linesAfter):]
         if len(linesAfter) > len(linesBefore):
             linesAfter = linesAfter[len(linesAfter) - len(linesBefore):]
-        
-        
+
         # check if they are mirroring eachother
         isReflection = True
 
@@ -37,8 +36,9 @@ def getLinesBefore(lines):
             return numberOfRowsAbove
 
         stack.append(line)
-    
+
     return 0
+
 
 def getNotes(pattern):
     rows = pattern
@@ -50,7 +50,7 @@ def getNotes(pattern):
         for row in pattern:
             column += row[i]
         columns.append(column)
-    
+
     notes = getLinesBefore(rows) * 100 + getLinesBefore(columns)
 
     if notes == 0:
@@ -58,8 +58,8 @@ def getNotes(pattern):
         raise Exception("No reflection found")
 
     return notes
-    
-    
+
+
 if __name__ == "__main__":
     patterns = getPatterns()
     # print(f"Patterns: {patterns}")
