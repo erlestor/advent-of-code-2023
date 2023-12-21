@@ -5,7 +5,6 @@ def getInstructions():
     # with open("./8/testMap2.txt", "r") as f:
     with open("./8/map.txt", "r") as f:
         text = f.read()
-        # TODO: storing instructions as the index
         instructions = text.split("\n\n")[0]
         map = {}
 
@@ -51,6 +50,8 @@ def findRequiredSteps(instructions, map):
                     pathLengths.append(pathLength)
                     endNodeFound = True
                     break
+        
+        print(f"Path length for {startingNode}: {pathLength}")
 
     return math.lcm(*pathLengths)
 
